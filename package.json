@@ -1,5 +1,5 @@
 {
-  "name": "assistente-geat-ui-textbox",
+  "name": "assistente-geat-chatstyle",
   "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
