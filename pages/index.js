@@ -1,10 +1,12 @@
 import { useState } from "react";
 
 export default function Home() {
+  const [pergunta, setPergunta] = useState("");
   const [resposta, setResposta] = useState("");
   const [carregando, setCarregando] = useState(false);
 
-  const handlePergunta = async (pergunta) => {
+  const handleEnviar = async () => {
+    if (!pergunta) return;
     setCarregando(true);
     setResposta("");
 
@@ -20,21 +22,25 @@ export default function Home() {
   };
 
   return (
-    <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
+    <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif", maxWidth: 700, margin: "0 auto" }}>
       <h1>Assistente de Comissionamento GEAT</h1>
-      <p>Escolha uma ação abaixo:</p>
+      <p>Digite sua pergunta técnica e receba a resposta da IA:</p>
 
-      <button onClick={() => handlePergunta("Explique o script de religador")} style={{ marginRight: 10 }}>
-        📄 Explicar Script
-      </button>
-      <button onClick={() => handlePergunta("Gerar checklist de disjuntor")}>
-        ✅ Gerar Checklist
+      <textarea
+        rows={4}
+        placeholder="Ex: Quais os critérios para energizar uma subestação rural?"
+        value={pergunta}
+        onChange={(e) => setPergunta(e.target.value)}
+        style={{ width: "100%", padding: "1rem", marginBottom: "1rem", borderRadius: 8, border: "1px solid #ccc" }}
+      />
+
+      <button onClick={handleEnviar} disabled={carregando} style={{ padding: "0.5rem 1rem" }}>
+        {carregando ? "🔄 Processando..." : "Enviar"}
       </button>
 
-      {carregando && <p>🔄 Processando...</p>}
       {resposta && (
-        <div style={{ marginTop: "1rem", background: "#f0f0f0", padding: "1rem", borderRadius: 8 }}>
-          <strong>Resposta:</strong>
+        <div style={{ marginTop: "2rem", background: "#f9f9f9", padding: "1rem", borderRadius: 8 }}>
+          <strong>Resposta da IA:</strong>
           <p>{resposta}</p>
         </div>
       )}
